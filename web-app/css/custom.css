@@ -1,0 +1,80 @@
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align: center;
+    z-index: 1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+footer .navbar {
+    padding: 0 20px;
+}
+
+[class^="cicon-"],
+[class*=" cicon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("../images/glyphicons_halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+}
+
+.cicon-sort-asc {
+    background-position: -240px -168px;
+}
+
+.cicon-sort-desc {
+    background-position: -264px -168px;
+}
+
+.iphone5 {
+    background-image: url("../images/iphone5_frame.png");
+    width: 226px;
+    height: 450px;
+    text-align: left;
+    padding: 77px 0 0 20px
+}
+
+.error-image {
+    width: 64px;
+    height: 64px;
+    padding-right: 10px;
+}
+
+@media (min-width: 980px) {
+    .error-image {
+        width: 64px;
+        height: 64px;
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .error-image {
+        width: 75px;
+        height: 75px;
+        margin-right: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-image {
+        width: 64px;
+        height: 64px;
+        margin-right: 5px;
+    }
+}
