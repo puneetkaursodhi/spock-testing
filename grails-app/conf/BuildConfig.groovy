@@ -56,7 +56,6 @@ grails.project.dependency.resolution = {
         compile ":asynchronous-mail:1.0-RC3"
 
         compile ":jquery-ui:1.8.24"
-//        compile ":jquery-validation-ui:1.4"
-//        compile ":jqueryui-widget:0.1.4.1"
+        test ":spock:0.7"
     }
 }
