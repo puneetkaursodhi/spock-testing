@@ -19,6 +19,15 @@ class TopicController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def showTopic(Long id) {
+        Topic topic = Topic.get(id)
+        if (topic) {
+            redirect(action: 'show', id: id)
+        } else {
+            redirect(controller: 'topic',action: 'list')
+        }
+    }
+
     def subscribeTopic() {
         Topic topicInstance = Topic.get(params.id.toLong())
         Seriousness seriousness = params.seriousness

@@ -2,12 +2,15 @@ package com.ig.linkSharing
 
 class UserController {
 
+
     def index() {
         List mostSubscribedTopics = mostSubscribedPublicTopicList()
         List<ReadingItem> unreadItemList = ReadingItem.findAllByUserAndIsRead(SessionUtility.user, false, [max: 10])
         List<Subscription> subscribedTopics = Subscription.findAllBySubscriber(SessionUtility.user)
         render(view: 'dashboard', model: [user: SessionUtility.user, subscribedTopics: subscribedTopics, unreadItemList: unreadItemList, mostSubscribedTopicList: mostSubscribedTopics])
     }
+
+
 
     def setting() {
         [userInstance: SessionUtility.user]
