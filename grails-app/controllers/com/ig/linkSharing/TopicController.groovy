@@ -24,7 +24,16 @@ class TopicController {
         if (topic) {
             redirect(action: 'show', id: id)
         } else {
-            redirect(controller: 'topic',action: 'list')
+            redirect(controller: 'topic', action: 'list')
+        }
+    }
+
+    def forwardAction(Long id) {
+        Topic topic = Topic.get(id)
+        if (topic) {
+            forward(controller: 'topic', action: 'show', id: id)
+        } else {
+            render "topic not found"
         }
     }
 
@@ -72,14 +81,14 @@ class TopicController {
     def save() {
         def topicInstance = new Topic(params)
         topicInstance.owner = SessionUtility.user
-        topicInstance.save(flush: true)
         if (!topicInstance.save(flush: true)) {
             render(view: "create", model: [topicInstance: topicInstance])
-            return
+        } else {
+            bootStrapService.subscribeTopic(topicInstance, Seriousness.SERIOUS, SessionUtility.user)
+            flash.message = message(code: 'default.created.message', args: [message(code: 'topic.label', default: 'Topic'), topicInstance.id])
+            redirect(action: "show", id: topicInstance.id)
         }
-        bootStrapService.subscribeTopic(topicInstance, Seriousness.SERIOUS, SessionUtility.user)
-        flash.message = message(code: 'default.created.message', args: [message(code: 'topic.label', default: 'Topic'), topicInstance.id])
-        redirect(action: "show", id: topicInstance.id)
+
     }
 
     def show(Long id) {

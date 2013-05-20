@@ -5,6 +5,7 @@ class SendMailService {
     def asynchronousMailService
     def groovyPageRenderer
     def grailsLinkGenerator
+    def grailsApplication
 
     //TODO: Could create separate method for sending mail instead of repeating code
     def sendMail(String email, String subjct, String body) {
@@ -35,5 +36,11 @@ class SendMailService {
         String subject = 'Invitation Mail'
         String body = '<body>Hello ,<br/>You are invited for subscription of topic <u> ' + topic + ' </u></body>'
         sendMail(email, subject, body)
+    }
+
+    def sendTopicCreationMailToAdmin(Topic topic) {
+        String subject = "new Topic Created"
+        String body = '<body>Hello ,<br/>A new topic has been created <u> ' + topic + ' </u></body>'
+        sendMail(grailsApplication.config.topic.creation.mail.to as String, subject, body)
     }
 }

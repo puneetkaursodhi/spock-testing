@@ -1,13 +1,19 @@
 package com.ig.linkSharing
 
+import grails.test.mixin.TestFor
 import spock.lang.Shared
+import spock.lang.Unroll
 
-
+@TestFor(User)
 class UserSpec extends spock.lang.Specification {
     @Shared
-    User userObj = new User(email: "komal@intelligrape.com", dateOfBirth: new Date(), password: "123456", firstName: "komal", lastName: "Jain", isMale: false)
+    User userObj
 
-    def "test userValidation"() {
+    def setup() {
+        userObj = new User(email: "komal@intelligrape.com", dateOfBirth: new Date(), password: "123456", firstName: "komal", lastName: "Jain", isMale: false)
+    }
+
+    def "test user validation"() {
         setup:
         User user = new User(email: email, dateOfBirth: dateOfBirth, password: password, firstName: firstName, lastName: lastName, isMale: isMale)
 
@@ -25,7 +31,8 @@ class UserSpec extends spock.lang.Specification {
 
     }
 
-    def "test sharedExample"() {
+    @Unroll
+    def "test shared example"() {
         setup:
         userObj.save()
         User user = new User(email: email, dateOfBirth: dateOfBirth, password: password, firstName: firstName, lastName: lastName, isMale: isMale)
@@ -37,12 +44,12 @@ class UserSpec extends spock.lang.Specification {
         then:
         User.count() == count
 
-        // put 1st condition in last and test
         where:
         email                    | dateOfBirth | password | firstName | lastName | isMale | count
-        "tanu@intelligrape.com"  | null        | "123456" | ""        | ""       | false  | 2
         "komal@intelligrape.com" | null        | "123456" | ""        | ""       | false  | 1
         "puneet"                 | null        | "123456" | ""        | ""       | false  | 1
+        "tanu@intelligrape.com"  | null        | "123456" | ""        | ""       | false  | 2
+
 
     }
 }

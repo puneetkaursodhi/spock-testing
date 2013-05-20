@@ -1,6 +1,7 @@
 package com.ig.linkSharing
 
 class BootStrapService {
+    def sendMailService
 
     User createUser(int it) {
         User user = new User(firstName: "Tanu$it", lastName: "Siwag$it", email: "tanu+$it@intelligrape.com", password: "tanu$it", dateOfBirth: new Date('02/12/1989'), isMale: false)
@@ -8,14 +9,20 @@ class BootStrapService {
         return user
     }
 
+
     Topic createTopicAndAddToUser(String topicName, Visibility visibility, User owner) {
         Topic topic = new Topic(name: topicName, visibility: visibility, owner: owner)
         topic.save()
+        sendMailService.sendTopicCreationMailToAdmin(topic)
         return topic
     }
 
     void subscribeTopic(Topic topic, Seriousness seriousness, User subscriber) {
         Subscription subscription = new Subscription(topic: topic, seriousness: seriousness, subscriber: subscriber)
+        saveSubscription(subscription)
+    }
+
+    void saveSubscription(Subscription subscription) {
         subscription.save()
     }
 

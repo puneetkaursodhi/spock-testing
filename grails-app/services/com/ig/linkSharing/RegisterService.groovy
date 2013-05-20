@@ -11,7 +11,6 @@ class RegisterService {
             user.properties = registerCommand.properties
             user.dateOfBirth = new Date().parse("dd-MMM-yyy", registerCommand.dob)
             user.save(failOnError: true)
-            println user.properties
             SessionUtility.userId = user.id
             sendMailService.sendWelcomeMail(user)
             return true
