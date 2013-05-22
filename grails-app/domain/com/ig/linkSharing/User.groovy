@@ -24,6 +24,6 @@ class User {
     }
 
     Boolean isAdmin() {
-        return email == 'tanu+0@intelligrape.com'
+        return email == 'komal@intelligrape.com'
     }
 }

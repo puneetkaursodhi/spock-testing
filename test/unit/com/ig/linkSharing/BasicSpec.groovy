@@ -4,6 +4,12 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class BasicSpec extends Specification {
+    def setupSpec() {
+        println "set-up spec has been called"
+    }
+    def setup(){
+        println "setup has been called"
+    }
 
     def "test maximum"() {
         expect:

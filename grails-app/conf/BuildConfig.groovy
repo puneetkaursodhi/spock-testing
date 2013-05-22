@@ -35,6 +35,9 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         runtime 'mysql:mysql-connector-java:5.1.20'
+        test 'cglib:cglib-nodep:2.2'
+        test 'org.objenesis:objenesis:1.2'
+
     }
 
     plugins {
@@ -57,5 +60,6 @@ grails.project.dependency.resolution = {
 
         compile ":jquery-ui:1.8.24"
         test ":spock:0.7"
+        test ":code-coverage:1.2.6"
     }
 }

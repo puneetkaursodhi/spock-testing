@@ -1,5 +1,6 @@
 package com.ig.linkSharing
 
+import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
 
 class TopicController {
@@ -22,6 +23,7 @@ class TopicController {
     def showTopic(Long id) {
         Topic topic = Topic.get(id)
         if (topic) {
+//            println "is authorised user" + topic?.isAuthorizedUser()
             redirect(action: 'show', id: id)
         } else {
             redirect(controller: 'topic', action: 'list')
@@ -36,6 +38,18 @@ class TopicController {
             render "topic not found"
         }
     }
+
+    def renderTopicAsJSON(Long id) {
+        Map responseMap = [status: 'success']
+        Topic topic = Topic.get(id)
+        if (topic) {
+            responseMap.topic = topic
+        } else {
+            responseMap.status = "failure"
+        }
+        render responseMap as JSON
+    }
+
 
     def subscribeTopic() {
         Topic topicInstance = Topic.get(params.id.toLong())

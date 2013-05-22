@@ -14,7 +14,7 @@ class Topic {
     static searchable = true
 
     String toString() {
-        return name + " (created by- " + owner + ")"
+        return name
     }
 
     Boolean isAuthorizedUser() {
