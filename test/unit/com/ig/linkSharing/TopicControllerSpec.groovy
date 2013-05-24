@@ -5,7 +5,7 @@ import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 @TestFor(TopicController)
-@Mock([Topic, User])
+@Mock([Topic])
 class TopicControllerSpec extends Specification {
 
     def "test show topic"() {
@@ -46,6 +46,7 @@ class TopicControllerSpec extends Specification {
 
     def "test json response"() {
         setup:
+        mockDomain(User)
         Topic topic = topicInstance
         topic.save()
 

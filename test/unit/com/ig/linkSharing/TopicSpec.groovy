@@ -13,5 +13,4 @@ class TopicSpec extends Specification {
         topic.validate()
     }
 
-
 }
