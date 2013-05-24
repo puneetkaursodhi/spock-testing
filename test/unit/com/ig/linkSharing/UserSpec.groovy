@@ -52,4 +52,22 @@ class UserSpec extends spock.lang.Specification {
 
 
     }
+
+    def "test exception condition"() {
+        setup:
+        userObj.save()
+        User user = new User(email: email, dateOfBirth: dateOfBirth, password: password, firstName: firstName, lastName: lastName, isMale: isMale)
+
+        when:
+        user.saveUser()
+        then:
+        thrown(RuntimeException)
+        where:
+        email                    | dateOfBirth | password | firstName | lastName | isMale
+        "komal@intelligrape.com" | null        | "123456" | ""        | ""       | false
+        "puneet"                 | null        | "123456" | ""        | ""       | false
+//        "tanu@intelligrape.com"  | null        | "123456" | ""        | ""       | false
+
+
+    }
 }

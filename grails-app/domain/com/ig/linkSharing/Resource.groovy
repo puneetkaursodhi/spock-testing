@@ -10,8 +10,8 @@ class Resource {
     static hasMany = [readingItem: ReadingItem]
 
     static constraints = {
-        title(unique: 'topic')
-        summary(maxSize: 1024)
+        title(unique: 'topic', blank: false)
+        summary(maxSize: 10)
     }
 
     static mapping = {

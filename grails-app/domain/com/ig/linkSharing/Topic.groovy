@@ -21,4 +21,16 @@ class Topic {
         User currentUser = SessionUtility.user
         return (currentUser == this.owner || currentUser.isAdmin())
     }
+
+    public static String fetchUserStatus(User user) {
+        String status
+        List<Topic> userTopics = Topic.findAllByOwner(user)
+        int publicTopicCount = userTopics.count { it.visibility == Visibility.PUBLIC }
+        if (publicTopicCount > 5) {
+            status = "Serious User"
+        } else {
+            status = "Casual User"
+        }
+        return status
+    }
 }

@@ -25,29 +25,40 @@ class TopicControllerSpec extends Specification {
 
     }
 
-    def "test show topic with session demo"() {
+    def "test forward action"() {
         setup:
         Topic topic = topicInstance
         topic.save()
-        User userObj = createUser()
-        userObj.save()
-        session.userId = userObj.id
 
-//        def mockedSessionUtility = mockFor(SessionUtility)
-//        mockedSessionUtility.demand.static.getUser(1..2) {->
-//            return createUser()
-//        }
         when:
-        controller.showTopic(id)
+        controller.forwardAction(id)
         then:
-        response.redirectedUrl == redirectUrl
+        forwardedUrl == url
+        forwardedParams.id == id.toString()
+        response.contentAsString == outputString
         where:
-        topicInstance | redirectUrl     | id
-        createTopic() | "/topic/show/1" | 1
-//        createTopic() | "/topic/show/2" | 2
-        createTopic() | "/topic/list" | null
+        topicInstance | url           | id | outputString
+        createTopic() | "/topic/show" | 1  | ""
+        //        createTopic() | null          | 2  | "topic not found"
 
     }
+
+
+    def "test json response"() {
+        setup:
+        Topic topic = topicInstance
+        topic.save()
+
+        when:
+        controller.renderTopicAsJSON(id)
+        then:
+        response.json.status == responseStatus
+        where:
+        topicInstance | responseStatus | id
+        createTopic() | "success"      | 1
+        createTopic() | "failure"      | 2
+    }
+
 
     def "test save topic with grails mocking"() {
         setup:
@@ -95,41 +106,6 @@ class TopicControllerSpec extends Specification {
         ""      | Visibility.PRIVATE | null            | createUser() | "/topic/create"
 
     }
-
-    def "test forward action"() {
-        setup:
-        Topic topic = topicInstance
-        topic.save()
-
-        when:
-        controller.forwardAction(id)
-        then:
-        forwardedUrl == url
-        forwardedParams.id == id.toString()
-        response.contentAsString == outputString
-        where:
-        topicInstance | url           | id | outputString
-        createTopic() | "/topic/show" | 1  | ""
-        //        createTopic() | null          | 2  | "topic not found"
-
-    }
-
-
-    def "test json response"() {
-        setup:
-        Topic topic = topicInstance
-        topic.save()
-
-        when:
-        controller.renderTopicAsJSON(id)
-        then:
-        response.json.status == responseStatus
-        where:
-        topicInstance | responseStatus | id
-        createTopic() | "success"      | 1
-        createTopic() | "failure"      | 2
-    }
-
 
 
     def populateValidParams(Map params, String name, Visibility visibility) {

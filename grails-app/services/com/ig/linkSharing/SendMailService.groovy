@@ -43,4 +43,10 @@ class SendMailService {
         String body = '<body>Hello ,<br/>A new topic has been created <u> ' + topic + ' </u></body>'
         sendMail(grailsApplication.config.topic.creation.mail.to as String, subject, body)
     }
+
+    def sendTopicDeletionMailToAdmin(Long id) {
+        String subject = "new Topic Created"
+        String body = '<body>Hello ,<br/>Topic has been deleted <u> ' + id + ' </u></body>'
+        sendMail(grailsApplication.config.topic.creation.mail.to as String, subject, body)
+    }
 }

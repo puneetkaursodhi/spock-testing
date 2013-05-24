@@ -23,7 +23,6 @@ class TopicController {
     def showTopic(Long id) {
         Topic topic = Topic.get(id)
         if (topic) {
-//            println "is authorised user" + topic?.isAuthorizedUser()
             redirect(action: 'show', id: id)
         } else {
             redirect(controller: 'topic', action: 'list')
@@ -127,7 +126,6 @@ class TopicController {
         [topicInstance: topicInstance]
     }
 
-    // TODO: Refactor Code according to your requirement instead of crud generated code
     def update(Long id, Long version) {
         def topicInstance = Topic.get(id)
         if (!topicInstance) {
@@ -135,17 +133,6 @@ class TopicController {
             redirect(action: "list")
             return
         }
-
-        if (version != null) {
-            if (topicInstance.version > version) {
-                topicInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'topic.label', default: 'Topic')] as Object[],
-                        "Another user has updated this Topic while you were editing")
-                render(view: "edit", model: [topicInstance: topicInstance])
-                return
-            }
-        }
-
         topicInstance.properties = params
 
         if (!topicInstance.save(flush: true)) {
@@ -157,7 +144,6 @@ class TopicController {
         redirect(action: "show", id: topicInstance.id)
     }
 
-    // TODO: Refactor Code according to your requirement instead of crud generated code
     def delete(Long id) {
         def topicInstance = Topic.get(id)
         if (!topicInstance) {
@@ -165,15 +151,9 @@ class TopicController {
             redirect(action: "list")
             return
         }
-
-        try {
-            topicInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'topic.label', default: 'Topic'), id])
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'topic.label', default: 'Topic'), id])
-            redirect(action: "show", id: id)
-        }
+        topicInstance.delete(flush: true)
+        sendMailService.sendTopicDeletionMailToAdmin(id)
+        flash.message = message(code: 'default.deleted.message', args: [message(code: 'topic.label', default: 'Topic'), id])
+        redirect(action: "list")
     }
 }

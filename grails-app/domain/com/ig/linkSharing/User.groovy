@@ -26,4 +26,12 @@ class User {
     Boolean isAdmin() {
         return email == 'komal@intelligrape.com'
     }
+
+    void saveUser() throws RuntimeException {
+        if (this.validate()) {
+            this.save(flush: true)
+        } else {
+            throw new RuntimeException("Not able to save method")
+        }
+    }
 }
